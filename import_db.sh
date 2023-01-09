@@ -27,6 +27,7 @@ wget http://flibusta.is/sql/lib.libseq.sql.gz
 wget http://flibusta.is/sql/lib.reviews.sql.gz
 wget http://flibusta.is/sql/lib.b.annotations.sql.gz
 wget http://flibusta.is/sql/lib.a.annotations.sql.gz
+wget http://flibusta.is/sql/lib.a.annotations_pics.sql.gz
 
 echo "Extracting files..."
 gzip -d lib.libavtor.sql.gz
@@ -45,6 +46,7 @@ gzip -d lib.libseq.sql.gz
 gzip -d lib.reviews.sql.gz
 gzip -d lib.b.annotations.sql.gz
 gzip -d lib.a.annotations.sql.gz
+gzip -d lib.a.annotations_pics.sql.gz
 
 echo "Processing sql files..."
 mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME < lib.libavtor.sql
@@ -63,9 +65,11 @@ mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME < lib.libseq.sql
 mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME < lib.reviews.sql
 mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME < lib.b.annotations.sql
 mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME < lib.a.annotations.sql
+mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME < lib.a.annotations_pics.sql
 
 echo "Creating indices..."
 echo 'ALTER TABLE `lib`.`libavtorname` ADD FULLTEXT INDEX `fulltextFirstLastName` (`FirstName`, `LastName`) VISIBLE;' | mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME
 echo 'ALTER TABLE `lib`.`libbannotations` ADD INDEX `BookID` (`BookId` ASC) VISIBLE;' | mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME
-
+echo 'ALTER TABLE `lib`.`libaannotations` ADD INDEX `AvtorId` (`AvtorId` ASC) VISIBLE;' | mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME
+echo 'ALTER TABLE `lib`.`libapics` ADD INDEX `AvtorId` (`AvtorId` ASC) VISIBLE;' | mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME
 echo "Done"
