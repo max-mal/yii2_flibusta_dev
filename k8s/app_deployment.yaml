@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application
+  namespace: lib
+spec:
+  selector:
+    matchLabels:
+      run: lib-app
+  template:
+    metadata:
+      labels:
+        run: lib-app
+    spec:
+      containers:
+        - name: lib-app
+          image: 192.168.88.151:32040/lib:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: storage-books
+              mountPath: /app/storage/books
+            - name: storage-attachments-authors
+              mountPath: /app/storage/attached/authors
+            - name: web-books
+              mountPath: /app/web/books
+            - name: runtime
+              mountPath: /app/runtime
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: storage-books
+          hostPath:
+            path: /mnt/s340/Flibusta.Net
+            type: Directory
+        - name: storage-attachments-authors
+          hostPath:
+            path: /mnt/s340/Flibusta.Net.author_attached
+            type: Directory
+        - name: web-books
+          hostPath:
+            path: /mnt/s340/lib/web-books
+            type: Directory
+        - name: runtime
+          hostPath:
+            path: /mnt/s340/lib/web-books
+            type: Directory

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  namespace: lib
+spec:
+  selector:
+    matchLabels:
+      run: lib-db
+  template:
+    metadata:
+      labels:
+        run: lib-db
+    spec:
+      volumes:
+        - name: storage
+          hostPath:
+            path: /mnt/s340/lib/db
+            type: Directory
+      containers:
+        - name: lib-db
+          image: mariadb:10.6.11
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - mountPath: "/var/lib/mysql"
+              name: storage
+          env:            
+            - name: MYSQL_DATABASE
+              value: 'lib'
+            - name: MYSQL_ROOT_PASSWORD
+              value: 'lib'

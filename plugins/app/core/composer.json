@@ -1,0 +1,20 @@
+{
+    "name": "app/core",
+    "description": "App Core",
+    "type": "plugin",
+    "keywords": [],    
+    "authors": [
+        {
+            "name": "admin",
+            "email": "admin@site.domain"
+        }
+    ],
+    "require": {
+        
+    },
+    "autoload": {
+        "psr-4": {
+            "\\app\\main\\": ""
+        }
+    }
+}

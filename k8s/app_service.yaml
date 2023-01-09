@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+  namespace: lib
+spec:  
+  selector:
+    run: lib-app
+  ports:
+    - port: 80
+      targetPort: 80

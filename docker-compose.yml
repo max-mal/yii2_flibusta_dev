@@ -1,0 +1,37 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: app
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+      - /home/user/vol0/Flibusta.Net/:/app/storage/books
+    ports:
+      - 8090:80
+    networks:
+      - lib-network
+  db:
+    image: mariadb:10.6.11
+    container_name: db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql      
+    networks:
+      - lib-network
+
+#Docker Networks
+networks:
+  lib-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
