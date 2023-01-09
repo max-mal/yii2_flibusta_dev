@@ -72,4 +72,6 @@ echo 'ALTER TABLE `lib`.`libavtorname` ADD FULLTEXT INDEX `fulltextFirstLastName
 echo 'ALTER TABLE `lib`.`libbannotations` ADD INDEX `BookID` (`BookId` ASC) VISIBLE;' | mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME
 echo 'ALTER TABLE `lib`.`libaannotations` ADD INDEX `AvtorId` (`AvtorId` ASC) VISIBLE;' | mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME
 echo 'ALTER TABLE `lib`.`libapics` ADD INDEX `AvtorId` (`AvtorId` ASC) VISIBLE;' | mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME
+echo 'ALTER TABLE `lib`.`libbook` ADD INDEX `Time` (`Time` ASC) VISIBLE;' | mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME
+echo 'ALTER TABLE `lib`.`libreviews` ADD INDEX `BookId` (`BookId` ASC) VISIBLE;' | mysql -h$DB_SERVER -u$DB_USER -p$DB_PASSWORD $DB_NAME
 echo "Done"

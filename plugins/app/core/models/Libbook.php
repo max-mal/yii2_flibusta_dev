@@ -479,11 +479,13 @@ class Libbook extends \yii\db\ActiveRecord
 
     public function downloadBookFb2()
     {
+        $storage = Yii::getAlias('@project') . "/storage/books/";
+
         $url = "http://flibusta.is/b/" . $this->BookId . "/fb2";
         try {
             $client = new \app\core\utils\ProxyRequest();
             $zip = $client->request($url);
-            $path = "/media/pi/DATA/fb2.Flibusta.Net/" . $this->BookId;        
+            $path = $storage . $this->BookId;
             file_put_contents($path, $zip);
             
             $za = new \ZipArchive();

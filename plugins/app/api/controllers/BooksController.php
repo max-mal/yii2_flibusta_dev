@@ -236,7 +236,7 @@ class BooksController extends BaseController
         }, 3 * 60 * 60);
         
         return Yii::$app->runAction('api/books/list', [
-            'genres' => join(',', [7, 12,81]),
+            'genres' => join(',', $genreIds),
             'popular' => 1,
             'page' => $page,
             'noCache' => true,

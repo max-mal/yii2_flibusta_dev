@@ -59,44 +59,10 @@ class GenreController extends BaseController
 
     public function actionBooks($genre, $page = 1, $popular = false)
     {
-        $perPage = 10;
-        $books = Libbook::find();
-
-        $books->innerJoin(
-            'libgenre',
-            'libbook.BookId = libgenre.BookId'
-        );
-
-        $books->where([
-            'libgenre.GenreId' => (int)$genre,
-            'Deleted' => 0,
+        return Yii::$app->runAction('api/books/list', [
+            'genres' => $genre,
+            'popular' => $popular,
+            'page' => $page,
         ]);
-
-        $books->orderBy(['Time' => SORT_DESC]);
-
-        
-        $books->select([
-            'libbook.*',
-            'rate' => Librate::find()->where('librate.BookId = libbook.BookId')->select(['SUM(librate.Rate)']),
-        ]);
-
-
-        if ($popular) {
-            $books->orderBy([
-                'rate' => SORT_DESC,
-            ]);
-        }
-
-        $result = [];
-
-        foreach ($books->limit($perPage)->offset(($page -1) * $perPage)->all() as $book) {
-            $result[] = $book->toResponse();
-        }
-
-        return [
-            'ok' => true,
-            'books' => $result,
-            'pages' =>  ceil($books->count() / $perPage) + 1,
-        ];
     }
 }
